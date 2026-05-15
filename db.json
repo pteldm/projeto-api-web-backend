@@ -1,0 +1,62 @@
+{
+  "livros": [
+    {
+      "id": 3,
+      "nome": "O Hobbit",
+      "autor": "Tolkien",
+      "paginas": "336",
+      "genero": "Fantasia"
+    },
+    {
+      "id": 4,
+      "nome": "As vantagens de ser invisível",
+      "autor": "Stephen Chbosky",
+      "paginas": "288",
+      "genero": "Drama"
+    },
+    {
+      "id": 5,
+      "nome": "Gente pobre",
+      "autor": "Fiódor Dostoievsky",
+      "paginas": "192",
+      "genero": "Romance"
+    },
+    {
+      "id": 7,
+      "nome": "Os miseráveis",
+      "autor": "Victor Hugo",
+      "paginas": "1511",
+      "genero": "Romance"
+    }
+  ],
+  "camisetas": [
+    {
+      "id": 1,
+      "tamanho": "M",
+      "cor": "Preta",
+      "marca": "Adidas",
+      "tipo": "Regata"
+    },
+    {
+      "id": 2,
+      "tamanho": "P",
+      "cor": "Branca",
+      "marca": "Nike",
+      "tipo": "T-shirt"
+    },
+    {
+      "id": 3,
+      "tamanho": "P",
+      "cor": "Vermelha",
+      "marca": "Polo Club",
+      "tipo": "Polo"
+    },
+    {
+      "id": 4,
+      "tamanho": "GG",
+      "cor": "Roxo",
+      "marca": "Polo Club",
+      "tipo": "T-shirt"
+    }
+  ]
+}

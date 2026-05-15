@@ -1,0 +1,16 @@
+extends layouts/main.pug
+//- Define o conteúdo que será injetado no 'block content' do layout
+block content
+    h1 Camisetas Disponíveis
+    if camisetas.length > 0
+        each camiseta in camisetas
+            div.camiseta-card
+                h3= camiseta.marca
+                p 
+                span Cor: #{camiseta.cor}
+                p 
+                span Tamanho: #{camiseta.tamanho}
+                p
+                span Tipo: #{camiseta.tipo}
+    else
+        p Nenhuma camiseta encontrada.

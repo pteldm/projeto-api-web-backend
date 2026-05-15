@@ -1,0 +1,15 @@
+extends layouts/main.pug
+//- Define o conteúdo que será injetado no 'block content' do layout
+block content
+	h1 Lista de Livros Cadastrados
+	if livros.length > 0
+		each livro in livros
+			div.livro-card
+				h3= livro.nome
+				p
+				strong Autor:
+				span= livro.autor
+				p 
+				span Páginas: #{livro.paginas}
+	else
+		p Nenhum livro cadastrado no momento.
