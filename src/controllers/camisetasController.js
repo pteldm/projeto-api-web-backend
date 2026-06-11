@@ -62,6 +62,9 @@ export const deletaCamiseta = async (req, res, next) => {
         await servicoDeletarCamiseta(id)
         res.status(204).send()
     } catch(error){
+        if (error.message === "Camiseta não encontrada") {
+            error.statusCode = 404
+        }
         next(error)
     }
 

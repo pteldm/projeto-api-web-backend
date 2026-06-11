@@ -3,10 +3,14 @@ import express from 'express'
 import livroRoutes from './routes/livroRoutes.js'
 import camisetaRoutes from './routes/camisetaRoutes.js'
 import webRoutes from './routes/webRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import authRoutes from './routes/authRoutes.js'
 
 import logMiddleware from './middlewares/logMiddleware.js'
 import routeNotFoundMiddleware from './middlewares/routeNotFoundMiddleware.js'
 import globalErrorHandler from './middlewares/errorMiddleware.js'
+import authMiddleware from './middlewares/authMiddleware.js'
+import checkRole from './middlewares/permissionsMiddleware.js' // IMPORTANDO O MIDDLEWARE DE PERMISSÕES
 
 import swaggerUi from 'swagger-ui-express'
 import swaggerSpec from './swagger.js'
@@ -25,9 +29,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use(express.json())
 app.use(logMiddleware)
 
-app.use('/api/livros', livroRoutes)
-app.use('/api/camisetas', camisetaRoutes)
+// ROTAS DESPROTEGIDAS (ACESSÍVEIS SEM AUTENTICAÇÃO)
 app.use('/view', webRoutes)
+app.use('/api/auth', authRoutes)
+// ROTAS DA API PROTEGIDAS POR AUTENTICAÇÃO E AUTORIZAÇÃO
+app.use('/api/users', authMiddleware, checkRole('admin'), userRoutes)
+app.use('/api/livros', authMiddleware, checkRole('admin'), livroRoutes)
+app.use('/api/camisetas', authMiddleware, checkRole('admin'), camisetaRoutes)
 
 app.use(routeNotFoundMiddleware)
 app.use(globalErrorHandler)

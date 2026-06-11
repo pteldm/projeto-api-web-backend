@@ -1,21 +1,20 @@
-import db from '../config/database.js'
+import { getDB } from '../config/mongo.js'
+import { ObjectId } from 'mongodb'
 
 export const repositorioCriarCamiseta = async (camisetaData) => {
-    const ultimaCamiseta = db.data.camisetas[db.data.camisetas.length - 1]
-    const novoId = ultimaCamiseta ? ultimaCamiseta.id + 1 : 1
-    const novaCamiseta = { id: novoId, ...camisetaData }
-    db.data.camisetas.push(novaCamiseta)
-    await db.write()
-    return novaCamiseta
+    const db = getDB()
+    const result = await db.collection('camisetas').insertOne(camisetaData)
+    return { _id: result.insertedId, ...camisetaData }
 }
 
 export const repositorioListarCamisetas = async () => {
-    const camisetas = db.data.camisetas
-    return camisetas
+    const db = getDB()
+    return await db.collection('camisetas').find().toArray()
 }
 
 export const repositorioListarCamisetaId = async (id) => {
-    const camiseta = db.data.camisetas.find(p => p.id === Number(id))
+    const db = getDB()
+    const camiseta = await db.collection('camisetas').findOne({ _id: new ObjectId(id) })
     if (!camiseta) {
         throw new Error("Camiseta não encontrada")
     }
@@ -23,36 +22,37 @@ export const repositorioListarCamisetaId = async (id) => {
 }
 
 export const repositorioAtualizarCamiseta = async (camisetaData) => {
-    const index = db.data.camisetas.findIndex(p => p.id === Number(camisetaData.id))
-    if (index === -1) {
+    const db = getDB()
+    const { id, ...dadosAtualizacao } = camisetaData
+    const result = await db.collection('camisetas').findOneAndReplace(
+        { _id: new ObjectId(id) },
+        dadosAtualizacao,
+        { returnDocument: 'after' }
+    )
+    if (!result) {
         throw new Error("Camiseta não encontrada")
     }
-    const {id, ...dadosAtualizacao} = camisetaData
-    const camisetaAtualizada = {id: db.data.camisetas[index].id, ...dadosAtualizacao}
-    db.data.camisetas[index] = camisetaAtualizada
-    await db.write()
-    return camisetaAtualizada
+    return result
 }
 
 export const repositorioAtualizarCamisetaParcial = async (camisetaData) => {
-    const index = db.data.camisetas.findIndex(p => p.id === Number(camisetaData.id))
-    if (index === -1) {
+    const db = getDB()
+    const { id, ...dadosAtualizacao } = camisetaData
+    const result = await db.collection('camisetas').findOneAndUpdate(
+        { _id: new ObjectId(id) },
+        { $set: dadosAtualizacao },
+        { returnDocument: 'after' }
+    )
+    if (!result) {
         throw new Error("Camiseta não encontrada")
     }
-    const camisetaDoBanco = db.data.camisetas[index]
-    const {id, ...dadosAtualizacao} = camisetaData
-    const camisetaAtualizadaParcial = {...camisetaDoBanco, ...dadosAtualizacao}
-    db.data.camisetas[index] = camisetaAtualizadaParcial
-    await db.write()
-    return camisetaAtualizadaParcial
+    return result
 }
 
 export const repositorioDeletarCamiseta = async (id) => {
-    const index = db.data.camisetas.findIndex(p => p.id === Number(id))
-    if (index === -1) {
+    const db = getDB()
+    const result = await db.collection('camisetas').deleteOne({ _id: new ObjectId(id) })
+    if (result.deletedCount === 0) {
         throw new Error("Camiseta não encontrada")
     }
-    db.data.camisetas.splice(index, 1)
-    await db.write()
-
 }

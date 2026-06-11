@@ -31,18 +31,17 @@ export const servicoAtualizarCamiseta = async (camisetaData) => {
 
 export const servicoAtualizarCamisetaParcial = async (camisetaData) => {
     const {id, tamanho, cor, marca, tipo} = camisetaData
-    
+
     const dadosLimpos = { id }
     if (tamanho !== undefined) dadosLimpos.tamanho = tamanho
     if (cor !== undefined) dadosLimpos.cor = cor
     if (marca !== undefined) dadosLimpos.marca = marca
     if (tipo !== undefined) dadosLimpos.tipo = tipo
-    
+
     const camisetaAtualizadaParcial = await repositorioAtualizarCamisetaParcial(dadosLimpos)
     return camisetaAtualizadaParcial
 }
 
 export const servicoDeletarCamiseta = async (id) => {
     await repositorioDeletarCamiseta(id)
-
 }

@@ -73,12 +73,12 @@ export const atualizaParcialLivro = async (req, res, next) => {
 }
 
 export const deletaLivro = async (req, res, next) => {
-    
+
     try{
         const {id} = req.params
         // controller -> service
         await servicoDeletarLivro(id)
-        res.status(200).send()
+        res.status(204).send()
     } catch(error){
         if (error.message === "Livro não encontrado") {
             error.statusCode = 404

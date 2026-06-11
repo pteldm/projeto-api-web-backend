@@ -3,7 +3,8 @@ import { JSONFile } from 'lowdb/node'
 
 const defaultData = { 
     livros : [],
-    camisetas : []
+    camisetas : [],
+    usuarios : []
  }
 const adapter = new JSONFile('db.json')
 

@@ -16,64 +16,6 @@ const router = Router()
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Livro:
- *       type: object
- *       required:
- *         - nome
- *         - autor
- *         - paginas
- *         - genero
- *       properties:
- *         id:
- *           type: integer
- *           description: O ID gerado automaticamente para o livro.
- *         nome:
- *           type: string
- *           description: O nome do livro.
- *         autor:
- *           type: string
- *           description: O autor do livro.
- *         paginas:
- *           type: integer
- *           description: O número de páginas do livro.
- *         genero:
- *           type: string
- *           description: O gênero do livro.
- *           enum: [Aventura, Romance, Fantasia, Ficção Científica, Terror, Drama]
- *       example:
- *         id: 1
- *         nome: "O Senhor dos Anéis"
- *         autor: "J.R.R. Tolkien"
- *         paginas: 1200
- *         genero: "Fantasia"
- *     LivroParcial:
- *       type: object
- *       properties:
- *         nome:
- *           type: string
- *           description: O nome do livro.
- *         autor:
- *           type: string
- *           description: O autor do livro.
- *         paginas:
- *           type: integer
- *           description: O número de páginas do livro.
- *         genero:
- *           type: string
- *           description: O gênero do livro.
- *           enum: [Aventura, Romance, Fantasia, Ficção Científica, Terror, Drama]
- *       example:
- *         nome: "O Hobbit"
- *         paginas: 300
- * tags:
- *   name: Livros
- *   description: API para gerenciamento de livros
- */
-
-/**
- * @swagger
  * /api/livros:
  *   post:
  *     summary: Cria um novo livro
@@ -82,8 +24,6 @@ const router = Router()
  *       required: true
  *       content:
  *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Livro'
  *           example:
  *             nome: "A Guerra dos Tronos"
  *             autor: "George R. R. Martin"
@@ -100,6 +40,7 @@ const router = Router()
  *         description: Erro de validação nos dados enviados.
  */
 router.post('/', regrasValidacaoCriarLivro, criarLivro)
+
 /**
  * @swagger
  * /api/livros:
@@ -117,6 +58,7 @@ router.post('/', regrasValidacaoCriarLivro, criarLivro)
  *                 $ref: '#/components/schemas/Livro'
  */
 router.get('/', listarLivros)
+
 /**
  * @swagger
  * /api/livros/{id}:
@@ -127,7 +69,7 @@ router.get('/', listarLivros)
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: O ID do livro
  *     responses:
@@ -141,6 +83,7 @@ router.get('/', listarLivros)
  *         description: Livro não encontrado.
  */
 router.get('/:id', listarLivroId)
+
 /**
  * @swagger
  * /api/livros/{id}:
@@ -151,7 +94,7 @@ router.get('/:id', listarLivroId)
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: O ID do livro
  *     requestBody:
@@ -178,6 +121,7 @@ router.get('/:id', listarLivroId)
  *         description: Livro não encontrado.
  */
 router.put('/:id', regrasValidacaoCriarLivro, atualizaLivro)
+
 /**
  * @swagger
  * /api/livros/{id}:
@@ -188,7 +132,7 @@ router.put('/:id', regrasValidacaoCriarLivro, atualizaLivro)
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: O ID do livro
  *     requestBody:
@@ -210,6 +154,7 @@ router.put('/:id', regrasValidacaoCriarLivro, atualizaLivro)
  *         description: Livro não encontrado.
  */
 router.patch('/:id', regrasValidacaoAtualizarParcialLivro,atualizaParcialLivro)
+
 /**
  * @swagger
  * /api/livros/{id}:
@@ -220,7 +165,7 @@ router.patch('/:id', regrasValidacaoAtualizarParcialLivro,atualizaParcialLivro)
  *       - in: path
  *         name: id
  *         schema:
- *           type: integer
+ *           type: string
  *         required: true
  *         description: O ID do livro
  *     responses:
@@ -230,5 +175,45 @@ router.patch('/:id', regrasValidacaoAtualizarParcialLivro,atualizaParcialLivro)
  *         description: Livro não encontrado.
  */
 router.delete('/:id', deletaLivro)
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Livro:
+ *       type: object
+ *       required:
+ *         - nome
+ *         - autor
+ *         - paginas
+ *         - genero
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: O ID gerado automaticamente pelo banco de dados
+ *         nome:
+ *           type: string
+ *           description: O nome do livro
+ *         autor:
+ *           type: string
+ *           description: O autor do livro
+ *         paginas:
+ *           type: integer
+ *           description: A quantidade de páginas do livro
+ *         genero:
+ *           type: string
+ *           description: O gênero literário do livro
+ *     LivroParcial:
+ *       type: object
+ *       properties:
+ *         nome:
+ *           type: string
+ *         autor:
+ *           type: string
+ *         paginas:
+ *           type: integer
+ *         genero:
+ *           type: string
+ */
 
 export default router
