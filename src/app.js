@@ -29,6 +29,10 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use(express.json())
 app.use(logMiddleware)
 
+app.get('/', (req, res) => {
+    res.json({ message: "API online e rodando no Render!" });
+});
+
 // ROTAS DESPROTEGIDAS (ACESSÍVEIS SEM AUTENTICAÇÃO)
 app.use('/view', webRoutes)
 app.use('/api/auth', authRoutes)
