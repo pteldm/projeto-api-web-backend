@@ -24,7 +24,6 @@ const __dirname = path.dirname(__filename)
 const app = express()
 
 app.use(express.static(path.join(__dirname, '../public')))
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.use(express.json())
 app.use(logMiddleware)
@@ -34,6 +33,7 @@ app.get('/', (req, res) => {
 });
 
 // ROTAS DESPROTEGIDAS (ACESSÍVEIS SEM AUTENTICAÇÃO)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use('/view', webRoutes)
 app.use('/api/auth', authRoutes)
 // ROTAS DA API PROTEGIDAS POR AUTENTICAÇÃO E AUTORIZAÇÃO

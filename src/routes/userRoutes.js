@@ -15,6 +15,8 @@ const router = Router();
  *   post:
  *     summary: Cria um novo usuário
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -33,6 +35,10 @@ const router = Router();
  *               $ref: '#/components/schemas/Usuario'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  */
 router.post('/', validaUsuario, criarUsuario)
 
@@ -42,6 +48,8 @@ router.post('/', validaUsuario, criarUsuario)
  *   put:
  *     summary: Atualiza um usuário existente pelo ID
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -67,6 +75,10 @@ router.post('/', validaUsuario, criarUsuario)
  *               $ref: '#/components/schemas/Usuario'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Usuário não encontrado.
  */
@@ -78,6 +90,8 @@ router.put('/:id', validaUsuario, atualizarUsuario)
  *   delete:
  *     summary: Deleta um usuário pelo ID
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -86,8 +100,12 @@ router.put('/:id', validaUsuario, atualizarUsuario)
  *         required: true
  *         description: O ID do usuário
  *     responses:
- *       '200':
+ *       '204':
  *         description: Usuário deletado com sucesso.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Usuário não encontrado.
  */
@@ -96,6 +114,11 @@ router.delete('/:id', deletarUsuario)
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     Usuario:
  *       type: object

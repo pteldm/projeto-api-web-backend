@@ -20,6 +20,8 @@ const router = Router()
  *   post:
  *     summary: Cria um novo livro
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -38,6 +40,10 @@ const router = Router()
  *               $ref: '#/components/schemas/Livro'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  */
 router.post('/', regrasValidacaoCriarLivro, criarLivro)
 
@@ -47,6 +53,8 @@ router.post('/', regrasValidacaoCriarLivro, criarLivro)
  *   get:
  *     summary: Retorna a lista de todos os livros
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       '200':
  *         description: Lista de livros retornada com sucesso.
@@ -56,6 +64,10 @@ router.post('/', regrasValidacaoCriarLivro, criarLivro)
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Livro'
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  */
 router.get('/', listarLivros)
 
@@ -65,6 +77,8 @@ router.get('/', listarLivros)
  *   get:
  *     summary: Retorna um livro pelo ID
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -79,6 +93,10 @@ router.get('/', listarLivros)
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Livro'
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Livro não encontrado.
  */
@@ -90,6 +108,8 @@ router.get('/:id', listarLivroId)
  *   put:
  *     summary: Atualiza um livro existente pelo ID
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -117,6 +137,10 @@ router.get('/:id', listarLivroId)
  *               $ref: '#/components/schemas/Livro'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Livro não encontrado.
  */
@@ -128,6 +152,8 @@ router.put('/:id', regrasValidacaoCriarLivro, atualizaLivro)
  *   patch:
  *     summary: Atualiza parcialmente um livro existente pelo ID
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,6 +176,10 @@ router.put('/:id', regrasValidacaoCriarLivro, atualizaLivro)
  *               $ref: '#/components/schemas/Livro'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Livro não encontrado.
  */
@@ -161,6 +191,8 @@ router.patch('/:id', regrasValidacaoAtualizarParcialLivro,atualizaParcialLivro)
  *   delete:
  *     summary: Deleta um livro pelo ID
  *     tags: [Livros]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -171,6 +203,10 @@ router.patch('/:id', regrasValidacaoAtualizarParcialLivro,atualizaParcialLivro)
  *     responses:
  *       '204':
  *         description: Livro deletado com sucesso.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Livro não encontrado.
  */
@@ -208,12 +244,20 @@ router.delete('/:id', deletaLivro)
  *       properties:
  *         nome:
  *           type: string
+ *           description: O nome do livro
+ *           example: "O Hobbit"
  *         autor:
  *           type: string
+ *           description: O autor do livro
+ *           example: "J. R. R. Tolkien"
  *         paginas:
  *           type: integer
+ *           description: A quantidade de páginas do livro
+ *           example: 310
  *         genero:
  *           type: string
+ *           description: O gênero literário do livro
+ *           example: "Fantasia"
  */
 
 export default router

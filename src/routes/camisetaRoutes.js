@@ -20,12 +20,8 @@ const router = Router()
  *   post:
  *     summary: Cria uma nova camiseta
  *     tags: [Camisetas]
- *     parameters:
- *       - in: header
- *         tamanho: "M"
- *         cor: "Azul" 
- *         marca: "Nike"
- *         tipo: "Esportiva"
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -34,7 +30,7 @@ const router = Router()
  *             tamanho: "M"
  *             cor: "Azul"
  *             marca: "Nike"
- *             tipo: "Esportiva"
+ *             tipo: "Polo"
  *     responses:
  *       '201':
  *         description: Camiseta criada com sucesso.
@@ -44,6 +40,10 @@ const router = Router()
  *               $ref: '#/components/schemas/Camiseta'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  */
 
 
@@ -55,6 +55,8 @@ router.post('/', regrasValidacaoCriarCamiseta, criarCamiseta)
  *   get:
  *     summary: Retorna a lista de todas as camisetas
  *     tags: [Camisetas]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       '200':
  *         description: Lista de camisetas retornada com sucesso.
@@ -64,6 +66,10 @@ router.post('/', regrasValidacaoCriarCamiseta, criarCamiseta)
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Camiseta'
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  */
 
 router.get('/', listarCamiseta)
@@ -74,6 +80,8 @@ router.get('/', listarCamiseta)
  *   get:
  *     summary: Retorna uma camiseta pelo ID
  *     tags: [Camisetas]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,6 +96,10 @@ router.get('/', listarCamiseta)
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Camiseta'
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Camiseta não encontrada.
  */
@@ -99,6 +111,8 @@ router.get('/:id', listarCamisetaId)
  *   put:
  *     summary: Atualiza uma camiseta existente pelo ID
  *     tags: [Camisetas]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -126,6 +140,10 @@ router.get('/:id', listarCamisetaId)
  *               $ref: '#/components/schemas/Camiseta'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Camiseta não encontrada.
  */
@@ -137,8 +155,10 @@ router.put('/:id', regrasValidacaoCriarCamiseta, atualizaCamiseta)
  *   patch:
  *     summary: Atualiza parcialmente uma camiseta existente pelo ID
  *     tags: [Camisetas]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: header
+ *       - in: path
  *         name: id
  *         schema:
  *           type: string
@@ -159,6 +179,10 @@ router.put('/:id', regrasValidacaoCriarCamiseta, atualizaCamiseta)
  *               $ref: '#/components/schemas/Camiseta'
  *       '400':
  *         description: Erro de validação nos dados enviados.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Camiseta não encontrada.
  */
@@ -170,8 +194,10 @@ router.patch('/:id', regrasValidacaoAtualizarParcialCamiseta, atualizaParcialCam
  *   delete:
  *     summary: Deleta uma camiseta pelo ID
  *     tags: [Camisetas]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - in: header
+ *       - in: path
  *         name: id
  *         schema:
  *           type: string
@@ -180,6 +206,10 @@ router.patch('/:id', regrasValidacaoAtualizarParcialCamiseta, atualizaParcialCam
  *     responses:
  *       '204':
  *         description: Camiseta deletada com sucesso.
+ *       '401':
+ *         description: Token de autenticação não fornecido ou inválido.
+ *       '403':
+ *         description: Acesso negado. Permissões insuficientes.
  *       '404':
  *         description: Camiseta não encontrada.
  */
