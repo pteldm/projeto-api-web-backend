@@ -12,7 +12,7 @@ export const criarLivro = async (req, res, next) => {
     const livroData = req.body
     
     try{
-        // criando um novo pet -> Service
+        // criando um novo livro -> Service
         const novoLivro = await servicoCriarLivro(livroData)
         res.status(201).json(novoLivro)
     }catch (error) {
@@ -22,7 +22,7 @@ export const criarLivro = async (req, res, next) => {
 
 export const listarLivros = async (req, res, next) => {
     try {
-        // Chama o serviço e aguarda a lista de pets
+        // Chama o serviço e aguarda a lista de livros
         const listaDeLivros = await servicoListarLivros()
         // Envia a lista como resposta com status 200
         res.status(200).json(listaDeLivros)
@@ -36,9 +36,6 @@ export const listarLivroId = async (req, res, next) => {
         const livro = await servicoListarLivroId(req.params.id)
         res.status(200).json(livro)
     }catch (error) {
-        if (error.message === "Livro não encontrado") {
-            error.statusCode = 404
-        }
         next(error)
     }
 }
@@ -51,9 +48,6 @@ export const atualizaLivro = async (req, res, next) => {
         const livroAtualizado = await servicoAtualizarLivro(livroData)
         res.status(200).json(livroAtualizado)
     } catch(error){
-        if (error.message === "Livro não encontrado") {
-            error.statusCode = 404
-        }
         next(error)
     }
 }
@@ -65,9 +59,6 @@ export const atualizaParcialLivro = async (req, res, next) => {
         const livroAtualizadoParcial = await servicoAtualizarParcialLivro(livroData)
         res.status(200).json(livroAtualizadoParcial)
     } catch(error){
-        if (error.message === "Livro não encontrado") {
-            error.statusCode = 404
-        }
         next(error)
     }
 }
@@ -76,13 +67,9 @@ export const deletaLivro = async (req, res, next) => {
     
     try{
         const {id} = req.params
-        // controller -> service
         await servicoDeletarLivro(id)
-        res.status(200).send()
+        res.status(204).send()
     } catch(error){
-        if (error.message === "Livro não encontrado") {
-            error.statusCode = 404
-        }
         next(error)
     }
 }

@@ -9,7 +9,7 @@ import {
 
 export const servicoCriarLivro = async (livroData) => {
 
-    // regra de negócio: os pets devem ter apenas esses campos
+    // regra de negócio: os livros devem ter apenas esses campos
     const { nome, autor, paginas, genero  } = livroData
     //service -> repositório
     const novoLivro = await repositorioCriarLivro({ nome, autor, paginas, genero })
@@ -30,7 +30,7 @@ export const servicoListarLivroId = async (id) => {
 }
 
 export const servicoAtualizarLivro = async (livroData) => {
-    // capturando os campos de interesse do petData que contém a requisição toda
+    // capturando os campos de interesse do livroData que contém a requisição toda
     const { id, nome, autor, paginas, genero } = livroData
     // service -> repository
     const livroAtualizado = await repositorioAtualizarLivro({ id, nome, autor, paginas, genero })
@@ -54,6 +54,6 @@ export const servicoAtualizarParcialLivro = async (livroData) => {
 }
 
 export const servicoDeletarLivro = async (id) => {
-    const deletarPet = await repositorioDeletarLivro(id)
-    return deletarPet
+    const deletarLivro = await repositorioDeletarLivro(id)
+    return deletarLivro
 }
